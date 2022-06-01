@@ -311,10 +311,10 @@ def draw():
             textdisplay = str(score[0])+str(score[1])+str(score[2]) +str(score[3]) + str(score[4])+str(score[5]) + str(score[6])
             text(textdisplay,430,180)
             if (restartHoverStatus == 0):
-                img_restart = loadImage("Restart.png")
+                img_restart = loadImage("Rot1.png")
                 image(img_restart,367,200, width / 12, height / 6)
             else:
-                img_restartH = loadImage("Restarthover.png")
+                img_restartH = loadImage("Rot2.png")
                 image(img_restartH,367,200, width / 12, height / 6)
 #___________________________________________________________________________________________input decetion             
 def mousePressed():
