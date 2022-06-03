@@ -17,15 +17,18 @@ def draw():
     rect(x,y,10,10)
     background(255,255,255)
     mario = loadImage("MarioIdle1.png")
-    image(mario,x,y,width/20,height/20)
-    if key == 'w':
-        y -= 1
-    if key == 's':
-        y += 1
-    if key == 'a':
-        x -= 1
-    if key == 'd':
-        x += 1
+    if keyPressed == False:
+        image(mario,x,y,width/20,height/20)
+    if keyPressed == True:
+        if key == 'w' or 'a' or 's' or 'd':
+            if key == 'w':
+                y -= 1
+            if key == 's':
+                y += 1
+            if key == 'a':
+                x -= 1
+            if key == 'd':
+                x += 1
     barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png"))
     for i in range(1,len(blocksX)):
         image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
