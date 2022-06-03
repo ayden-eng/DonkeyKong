@@ -3,7 +3,7 @@ def setup():
     background(255,255,255)
    
 timer = False
-boxx,boxy = 100,100
+boxx,boxy = [],[]
 x,y = 200,200
 n =0
 def draw():
@@ -18,9 +18,26 @@ def draw():
         x -= 1
     if key == 'd':
         x += 1
-    rect(boxx,boxy,10,10)
-    if x <= boxx + 10 and x >= boxx - 10:
-        if y >= boxy - 10 and y <= boxy + 10:
-            print "ok"
-   
-    print("")
+    if 1==1:
+        for i in range (1,len(boxx)):
+            rect(boxx[i],boxy[i],10,10)
+            if x <= boxx[i] + 10 and x >= boxx[i] - 10:
+                if y >= boxy[i] - 10 and y <= boxy[i] + 10:
+                    print "ok"
+    if timer == False:
+
+       for i in range(1,200):
+           n += 0.001
+           if n >= 30:
+               n= 0 
+               boxx.append(1)
+               boxy.append(1)
+    
+               for i in range(1,len(boxx)):
+                   if boxx[i] >= 0 and boxx[i] <= 150:
+                      boxx[i] += 10
+                   else:
+                       boxy[i] += 10    
+        
+               
+    print('')
