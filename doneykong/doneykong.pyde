@@ -1,3 +1,4 @@
+import random
 def setup():
      size(400,400)
      background(255,255,255)
@@ -10,21 +11,31 @@ blocksX = [0]
 blocksY = [0]
 n =0
 Key = 0
-frame,frame2 = 1,1
+frame,frame2,frame3 = 1,1,1
 barrleroll,m = 1,0
 mario = 0
 mario_Lwalk,mario_Rwalk = 1,1
 direction,jump = "left","ON"
 Height = 0
+Background = 0
+Kong = 1
+Kong_animation= 4
+On = ["on","on","on","off","off","off"]
 def keyPressed ():
     global Key
     Key = key
 
 def draw():
-    global boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
-    global mario_Lwalk,direction,mario_Rwalk,jump
+    global frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
+    global mario_Lwalk,direction,mario_Rwalk,jump,Kong_animation
+    global Background,Kong
     rect(x,y,10,10)
+    Background = loadImage("DonkeyKongMap1.png")
     background(255,255,255)
+    image(Background,30,30,width*.8,height*.8)
+
+    Kong = loadImage(str("DonkeyKong") + str(frame3)+str(".png"))
+    image(Kong,110,49)
     marioL = loadImage("MarioIdle1.png")
     marioR = loadImage("MarioIdle3.png")
     mario_Lwalk = loadImage(str("LMarioWalk") + str(frame2)+str(".png"))
@@ -85,7 +96,6 @@ def draw():
         if Height == 8:
             Height =0
             jump = "ON"
-    print(Key)
                 
     barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png"))
     for i in range(1,len(blocksX)):
@@ -97,24 +107,32 @@ def draw():
     if timer == False:
         for i in range(1,200):
             n += 0.001
-            if n >= 20:
+            if n >= 50:
+                Kong_animation = random.randint(0,5)
                 n = 0
-                blocksX.append(1)
-                blocksY.append(205)
-    for i in range(0,len(blocksX)):
-        if blocksX[i] >= 1:
-            blocksX[i] += 1
      #__________________________________________________________________________
     if timer == False:
         for i in range(1,200):
             m += 0.001
-            if m >=5:
-                m = 0
-                frame += 1
+            if m >= 5:
                 frame2 += 1
                 if frame2 == 3:
                     frame2 = 1
+                if On[Kong_animation] == 'on':
+                    frame3 += 1
+                    if frame3 == 4:
+                        Kong_animation = 4
+                        frame3 = 1
+                        blocksX.append(152)
+                        blocksY.append(65)
+                       
+            if m >=5:
+                m = 0
+                frame += 1
                 if frame == 5:
                     frame = 1
-        
+    print(mouseX,mouseY)
+    for i in range(0,len(blocksX)):
+        if blocksX[i] >= 1:
+            blocksX[i] += 1
     
