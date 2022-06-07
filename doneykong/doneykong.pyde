@@ -131,8 +131,27 @@ def draw():
                 frame += 1
                 if frame == 5:
                     frame = 1
-    print(mouseX,mouseY)
+
     for i in range(0,len(blocksX)):
-        if blocksX[i] >= 1:
+        if blocksX[i] <= 222 and blocksY[i] == 65:
             blocksX[i] += 1
-    
+        if blocksX[i] >= 222 and blocksX[i] <= 260 and blocksY[i] <= 125:
+            blocksX[i] += 0.4
+            blocksY[i] += 1
+        if blocksY[i] == 126 and blocksX[i] >= 154:
+            blocksX[i] -= 1
+        if blocksX[i] <= 154 and blocksY[i] <=186 and blocksY[i] >= 125 :
+            blocksY[i] += 1
+        if blocksY[i] == 187 and blocksX[i] >= 68:
+            blocksX[i] -= 1
+            print("ok")
+        if blocksX[i] <= 68 and blocksY[i] <= 247 and blocksY[i] >= 186:
+            blocksY[i] +=1
+            print("ok")
+        if blocksY[i] == 248 and blocksX[i] <= 297 :
+            blocksX[i] += 1
+        if blocksX[i] >= 297 and blocksY >=248 and blocksY[i] <= 308: 
+            blocksY[i] += 1
+        if blocksY[i] == 309:
+            blocksX[i] -= 1
+        print(mouseX,mouseY)
