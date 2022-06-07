@@ -5,7 +5,7 @@ def setup():
    
 
 boxx,boxy = 100,100
-x,y = 0,200
+x,y = 0,305
 timer,n,b = False,0,0
 blocksX = [0]
 blocksY = [0]
@@ -144,14 +144,11 @@ def draw():
             blocksY[i] += 1
         if blocksY[i] == 187 and blocksX[i] >= 68:
             blocksX[i] -= 1
-            print("ok")
         if blocksX[i] <= 68 and blocksY[i] <= 247 and blocksY[i] >= 186:
             blocksY[i] +=1
-            print("ok")
         if blocksY[i] == 248 and blocksX[i] <= 297 :
             blocksX[i] += 1
         if blocksX[i] >= 297 and blocksY >=248 and blocksY[i] <= 308: 
             blocksY[i] += 1
         if blocksY[i] == 309:
             blocksX[i] -= 1
-        print(mouseX,mouseY)
