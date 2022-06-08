@@ -21,12 +21,13 @@ Background = 0
 Kong = 1
 Kong_animation= 4
 On = ["on","on","on","off","off","off"]
+lives = 3
 def keyPressed ():
     global Key
     Key = key
 
 def draw():
-    global frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
+    global lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
     global mario_Lwalk,direction,mario_Rwalk,jump,Kong_animation
     global Background,Kong
     rect(x,y,10,10)
@@ -102,7 +103,7 @@ def draw():
         image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
         if x <= blocksX[i] + 15 and x >= blocksX[i] - 18:
             if y >= blocksY[i] - 20 and y <= blocksY[i] + 15:
-                print "ok"
+                lives -=1
     
     if timer == False:
         for i in range(1,200):
@@ -152,3 +153,6 @@ def draw():
             blocksY[i] += 1
         if blocksY[i] == 309:
             blocksX[i] -= 1
+    if lives == 0:
+        while 1==1:
+            print("DEAD")
