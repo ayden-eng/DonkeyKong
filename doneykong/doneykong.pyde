@@ -32,7 +32,7 @@ def setup():
    
 
 boxx,boxy = 100,100
-x,y = 0,305
+x,y = 0,0
 timer,n,b = False,0,0
 blocksX = [0]
 blocksY = [0]
@@ -92,16 +92,15 @@ def draw():
                 jump = "OFF"
             
             
-
         if keyPressed == True:
             if Key == 'w' or Key == 'a' or Key == 's' or Key == 'd':
                 if Key == 'a':
-                    x -= 1.5
-                    image(mario_Lwalk,x,y,width/20,height/20)
+                    x -= 5
+                    image(mario_Lwalk,x,y,width/17.5,height/17.5)
                     direction = "left"
                 if Key == 'd':
-                    x += 1.5
-                    image(mario_Rwalk,x,y,width/20,height/20)
+                    x += 5
+                    image(mario_Rwalk,x,y,width/17.5,height/17.5)
                     direction = "right"
                     
         if jump == "OFF":
@@ -112,14 +111,14 @@ def draw():
                 if direction == "right":
                     Key = 'd'
                 if direction == "left" or direction == "left" and Key == "w" :
-                    image(mario_Lwalk,x,y,width/20,height/20)
+                    image(mario_Lwalk,x,y,width/17.5,height/17.5)
                 if direction == "right" or direction == "Right" and Key == "w":
-                    image(mario_Rwalk,x,y,width/20,height/20)
+                    image(mario_Rwalk,x,y,width/17.5,height/17.5)
             if Height < 4:
                 for i in range (1,200):
                     b += 0.001
                     if b >= 1:
-                        y -= 8
+                        y -= 16
                         Height += 1
                     
                         b = 0
@@ -127,32 +126,33 @@ def draw():
                 for i in range (1,200):
                     b += 0.001
                     if b >= 1:
-                        y += 4
+                        y += 8
                         Height += 0.5
                         b = 0
                         jump == "ON"
             if Height == 8:
                 Height =0
                 jump = "ON"
-                
+        
         barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png"))
         for i in range(1,len(blocksX)):
             image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
-            if x <= blocksX[i] + 15 and x >= blocksX[i] - 18:
-                if y >= blocksY[i] - 20 and y <= blocksY[i] + 15:
-                    lives -=1
-        
+            if x <= blocksX[i] + 32 and x >= blocksX[i] - 42:
+                if y >= blocksY[i] - 45 and y <= blocksY[i] + 30:
+                    print("OK")
+            # print(mouseX,mouseY)
+            print(x,blocksX[i]+15,blocksX[i] - 0,y, blocksY[i] + 30,blocksY[i] - 45)
         if timer == False:
             for i in range(1,200):
                 n += 0.001
-                if n >= 50:
+                if n >= 20:
                     Kong_animation = random.randint(0,5)
                     n = 0
     #__________________________________________________________________________
         if timer == False:
             for i in range(1,200):
                 m += 0.001
-                if m >= 5:
+                if m >= 3:
                     frame2 += 1
                     if frame2 == 3:
                         frame2 = 1
@@ -161,15 +161,14 @@ def draw():
                         if frame3 == 4:
                             Kong_animation = 4
                             frame3 = 1
-                            blocksX.append(152)
-                            blocksY.append(65)
-                    
-                if m >=5:
+                            blocksX.append(42)
+                            blocksY.append(0)
+            
+                if m >=3:
                     m = 0
                     frame += 1
                     if frame == 5:
                         frame = 1
-
         for i in range(0,len(blocksX)):
             if blocksX[i] <= 222 and blocksY[i] == 65:
                 blocksX[i] += 1
