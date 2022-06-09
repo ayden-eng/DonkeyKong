@@ -139,7 +139,7 @@ def draw():
             image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
             if x <= blocksX[i] + 32 and x >= blocksX[i] - 42:
                 if y >= blocksY[i] - 45 and y <= blocksY[i] + 30:
-                    print("OK")
+                    lives = lives - 1
             # print(mouseX,mouseY)
             print(x,blocksX[i]+15,blocksX[i] - 0,y, blocksY[i] + 30,blocksY[i] - 45)
         if timer == False:
