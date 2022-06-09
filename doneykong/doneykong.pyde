@@ -46,8 +46,8 @@ direction,jump = "left","ON"
 Height = 0
 Background = 0
 Kong = 1
-Kong_animation= 4
-On = ["on","on","on","off","off","off"]
+Kong_animation= 0
+On = ["on","off","off","off","off","off"]
 lives = 3
 def keyPressed ():
     global Key
@@ -78,6 +78,7 @@ def draw():
         marioR = loadImage("MarioIdle3.png")
         mario_Lwalk = loadImage(str("LMarioWalk") + str(frame2)+str(".png"))
         mario_Rwalk = loadImage(str("RMarioWalk") + str(frame2)+str(".png"))
+        print(mouseX,mouseY)
         if keyPressed == False:
             if direction == "left" or direction == "left" and Key == "w" :
                 image(marioL,x,y,width/17.5,height/17.5)
@@ -139,9 +140,8 @@ def draw():
             image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
             if x <= blocksX[i] + 32 and x >= blocksX[i] - 42:
                 if y >= blocksY[i] - 45 and y <= blocksY[i] + 30:
-                    print("OK")
-            # print(mouseX,mouseY)
-            print(x,blocksX[i]+15,blocksX[i] - 0,y, blocksY[i] + 30,blocksY[i] - 45)
+                    lives -= 1
+            
         if timer == False:
             for i in range(1,200):
                 n += 0.001
@@ -161,8 +161,8 @@ def draw():
                         if frame3 == 4:
                             Kong_animation = 4
                             frame3 = 1
-                            blocksX.append(42)
-                            blocksY.append(0)
+                            blocksX.append(285)
+                            blocksY.append(95)
             
                 if m >=3:
                     m = 0
@@ -170,25 +170,40 @@ def draw():
                     if frame == 5:
                         frame = 1
         for i in range(0,len(blocksX)):
-            if blocksX[i] <= 222 and blocksY[i] == 65:
-                blocksX[i] += 1
-            if blocksX[i] >= 222 and blocksX[i] <= 260 and blocksY[i] <= 125:
-                blocksX[i] += 0.4
+            if blocksX[i] <= 481 and blocksY[i] == 95:
+                blocksX[i] += 3.5
+            if blocksX[i] >= 481 and blocksX[i] <= 596 and blocksY[i] <=246 and blocksY[i] >= 95 :
+                blocksX[i] += 2.5
+                blocksY[i] += 3.5
+            if blocksY[i] == 249 and blocksX[i] >= 591 and blocksX[i] <= 770:
+                blocksX[i] += 3.5
+            if blocksX[i] >= 770 and blocksY[i] == 249:
                 blocksY[i] += 1
-            if blocksY[i] == 126 and blocksX[i] >= 154:
-                blocksX[i] -= 1
-            if blocksX[i] <= 154 and blocksY[i] <=186 and blocksY[i] >= 125 :
-                blocksY[i] += 1
-            if blocksY[i] == 187 and blocksX[i] >= 68:
-                blocksX[i] -= 1
-            if blocksX[i] <= 68 and blocksY[i] <= 247 and blocksY[i] >= 186:
-                blocksY[i] +=1
-            if blocksY[i] == 248 and blocksX[i] <= 297 :
-                blocksX[i] += 1
-            if blocksX[i] >= 297 and blocksY >=248 and blocksY[i] <= 308: 
-                blocksY[i] += 1
-            if blocksY[i] == 309:
-                blocksX[i] -= 1
+                print(blocksY[i])
+            if blocksY[i] == 250 and blocksX[i] <= 800 and blocksX[i] >= 308:
+                blocksX[i] -=3.5
+                print(blocksX[i])
+            if blocksX[i] == 307.5 and blocksY[i] >= 250 and blocksY[i] <= 399:
+                blocksY[i] += 3.5
+
+            
+            # if blocksX[i] >= 222 and blocksX[i] <= 260 and blocksY[i] <= 125:
+            #     blocksX[i] += 0.4
+            #     blocksY[i] += 1
+            # if blocksY[i] == 126 and blocksX[i] >= 154:
+            #     blocksX[i] -= 1
+            # if blocksX[i] <= 154 and blocksY[i] <=186 and blocksY[i] >= 125 :
+            #     blocksY[i] += 1
+            # if blocksY[i] == 187 and blocksX[i] >= 68:
+            #     blocksX[i] -= 1
+            # if blocksX[i] <= 68 and blocksY[i] <= 247 and blocksY[i] >= 186:
+            #     blocksY[i] +=1
+            # if blocksY[i] == 248 and blocksX[i] <= 297 :
+            #     blocksX[i] += 1
+            # if blocksX[i] >= 297 and blocksY >=248 and blocksY[i] <= 308: 
+            #     blocksY[i] += 1
+            # if blocksY[i] == 309:
+            #     blocksX[i] -= 1
         if lives == 0:
             while 1==1:
                 print("DEAD")
