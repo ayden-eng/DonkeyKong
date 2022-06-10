@@ -16,12 +16,12 @@ def setup():
     #########################################################################
     global PBm_X #Main Menu Play Button X Position 
     global PBm_Y #Main Menu Play Button Y Position 
-    PBm_X = 130 
-    PBm_Y = 200 
+    PBm_X = 260 
+    PBm_Y = 450 
     global HBm_X #Main Menu Help Button X Position
     global HBm_Y #Main Menu Help Button Y Position
-    HBm_X = 130
-    HBm_Y = 275
+    HBm_X = 260
+    HBm_Y = 600
     #########################################################################
     global GameIconMain
     GameIconMain = loadImage("DonkeyKongIcon.png") #Game Icon For Display In Main Menu
@@ -67,13 +67,13 @@ def draw():
     global PBm_X, HBm_X, PBm_Y, HBm_Y #Coordinate Variables
     if (status == 0): #Main Menu
         background(0, 0, 0) #Overlays The Hover To Prevent Button Overlapping
-        image(GameIconMain, 67, -30, width / 1.5, height / 1.5) #Load Game Icon in Main Menu
+        image(GameIconMain, 135, -30, width / 1.5, height / 1.5) #Load Game Icon in Main Menu
         image(PlayButtonMain, PBm_X, PBm_Y, width / PBm_Width, height / PBm_Height) #Load Play Button In Main Menu
         image(HelpButtonMain, HBm_X, HBm_Y, width / HBm_Width, height / HBm_Height) #Load Help Button In Main Menu
     elif (status == 1): #In Game
         rect(x,y,10,10)
         Background = loadImage("DonkeyKongMap1.png")
-        background(255,255,255)
+        background(0, 0, 0)
         image(Background, 0, 0, width * 1, height * 1)
 
         Kong = loadImage(str("DonkeyKong") + str(frame3)+str(".png"))
@@ -235,6 +235,10 @@ def draw():
         if lives == 0:
             while 1==1:
                 print("DEAD")
+                
+    elif (status == 2):
+        instructions = loadImage("DK Tutorial.png")
+        image(instructions, 0, 0, width / 1, height / 1)
             
             
 def mousePressed(): #Button Click Detection
@@ -246,6 +250,7 @@ def mousePressed(): #Button Click Detection
             status = 1
         elif ((mouseX >= 130 and mouseX <= 261) and (mouseY >= 275 and mouseY <= 340)): #Help Button is clicked
             println("Help Button Was Clicked")
+            status = 2
         else: 
             println("No Button Click detected") #No Button Click Detected
             
@@ -257,19 +262,19 @@ def mouseMoved():
         if ((mouseX >= 130 and mouseX <= 261) and (mouseY >= 203 and mouseY <= 265)):
             PBm_Height = 5.5 #Increases The Play Button Size when Mouse hovers over it
             PBm_Width = 2.75
-            PBm_X = 125 #Adjusts X Position to keep Play Button centred
-            PBm_Y = 200
+            PBm_X = 250 #Adjusts X Position to keep Play Button centred
+            PBm_Y = 450
         elif ((mouseX >= 130 and mouseX <= 261) and (mouseY >= 275 and mouseY <= 340)):
             HBm_Height = 5.5 #Increases The Help Button Size when Mouse hovers over it
             HBm_Width = 2.75
-            HBm_X = 125 #Adjusts X Position to keep Help Button centred
-            HBm_Y = 275
+            HBm_X = 250 #Adjusts X Position to keep Help Button centred
+            HBm_Y = 600
         else:
             PBm_Height = 6 #Restore Button Coordinates And Dimensions to Original If No Mouse Hover Is Detected
             PBm_Width = 3
             HBm_Height = 6
             HBm_Width = 3
-            PBm_X = 130
-            PBm_Y = 200
-            HBm_X = 130
-            HBm_Y = 275
+            PBm_X = 260
+            PBm_Y = 450
+            HBm_X = 260
+            HBm_Y = 600
