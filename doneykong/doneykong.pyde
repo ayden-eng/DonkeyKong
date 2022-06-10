@@ -32,7 +32,8 @@ def setup():
    
 
 boxx,boxy = 100,100
-x,y = 0,0
+x,y = 0,500
+X_barrel,Y_barrel = 285,95
 timer,n,b = False,0,0
 blocksX = [0]
 blocksY = [0]
@@ -47,14 +48,17 @@ Height = 0
 Background = 0
 Kong = 1
 Kong_animation= 0
-On = ["on","off","off","off","off","off"]
+Kong_animation1 = 0
+On = ["on","off","off","throw","off","off"]
+On1 = ["off","off","off","throw","throw","off"]
 lives = 3
+wait = False
 def keyPressed ():
     global Key
     Key = key
 
 def draw():
-    global lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
+    global Kong_animation1,On1,wait,X_barrel,Y_barrel,lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
     global mario_Lwalk,direction,mario_Rwalk,jump,Kong_animation
     global Background,Kong
     global status #Control Variables
@@ -78,7 +82,6 @@ def draw():
         marioR = loadImage("MarioIdle3.png")
         mario_Lwalk = loadImage(str("LMarioWalk") + str(frame2)+str(".png"))
         mario_Rwalk = loadImage(str("RMarioWalk") + str(frame2)+str(".png"))
-        print(mouseX,mouseY)
         if keyPressed == False:
             if direction == "left" or direction == "left" and Key == "w" :
                 image(marioL,x,y,width/17.5,height/17.5)
@@ -136,18 +139,26 @@ def draw():
                 jump = "ON"
         
         barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png"))
+        barrleroll1 = loadImage(str("Barrelroll") + str(frame)+str(".png"))
         for i in range(1,len(blocksX)):
             image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
-            if x <= blocksX[i] + 32 and x >= blocksX[i] - 42:
-                if y >= blocksY[i] - 45 and y <= blocksY[i] + 30:
+            if x <= blocksX[i] + 32 and x >= blocksX[i] - 42 or x <= X_barrel + 32 and x >= X_barrel -42:
+                if y >= blocksY[i] - 45 and y <= blocksY[i] + 30 or y >= Y_barrel - 45 and y <= Y_barrel+30:
                     lives -= 1
             
         if timer == False:
             for i in range(1,200):
                 n += 0.001
                 if n >= 20:
+                    if wait == False:
+                        Kong_animation1 = random.randint(0,5)
+                        X_barrel,Y_barrel = 285,95
                     Kong_animation = random.randint(0,5)
                     n = 0
+                  
+                   
+                        
+                        
     #__________________________________________________________________________
         if timer == False:
             for i in range(1,200):
@@ -163,12 +174,13 @@ def draw():
                             frame3 = 1
                             blocksX.append(285)
                             blocksY.append(95)
-            
+                
                 if m >=3:
                     m = 0
                     frame += 1
                     if frame == 5:
                         frame = 1
+                
         for i in range(0,len(blocksX)):
             if blocksX[i] <= 481 and blocksY[i] == 95:
                 blocksX[i] += 3.5
@@ -179,12 +191,28 @@ def draw():
                 blocksX[i] += 3.5
             if blocksX[i] >= 770 and blocksY[i] == 249:
                 blocksY[i] += 1
-                print(blocksY[i])
+   
             if blocksY[i] == 250 and blocksX[i] <= 800 and blocksX[i] >= 308:
                 blocksX[i] -=3.5
-                print(blocksX[i])
+         
             if blocksX[i] == 307.5 and blocksY[i] >= 250 and blocksY[i] <= 399:
                 blocksY[i] += 3.5
+        if On1[Kong_animation1] == "throw":           
+                image(barrleroll,X_barrel,Y_barrel,width/25,height/25)
+                wait = True
+                if X_barrel >= x:
+                    X_barrel -= 1
+                if X_barrel <= x:
+                    X_barrel += 1
+                Y_barrel += 3 
+                if Y_barrel >= 800:
+                    wait = False
+                    print("ok")
+                    Kong_animation1 = 0
+                    print("ok")
+                    X_barrel,Y_barrel = 285,95
+        print(On1[Kong_animation1],Kong_animation1,wait,X_barrel,Y_barrel)
+                            
 
             
             # if blocksX[i] >= 222 and blocksX[i] <= 260 and blocksY[i] <= 125:
