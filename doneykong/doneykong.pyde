@@ -32,7 +32,7 @@ def setup():
    
 
 boxx,boxy = 100,100
-x,y = 0,500
+x,y = 0,690
 X_barrel,Y_barrel = 285,95
 timer,n,b = False,0,0
 blocksX = [0]
@@ -53,12 +53,13 @@ On = ["on","off","off","throw","off","off"]
 On1 = ["off","off","off","throw","throw","off"]
 lives = 3
 wait = False
+ladder = False
 def keyPressed ():
     global Key
     Key = key
 
 def draw():
-    global Kong_animation1,On1,wait,X_barrel,Y_barrel,lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
+    global ladder,Kong_animation1,On1,wait,X_barrel,Y_barrel,lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
     global mario_Lwalk,direction,mario_Rwalk,jump,Kong_animation
     global Background,Kong
     global status #Control Variables
@@ -82,68 +83,70 @@ def draw():
         marioR = loadImage("MarioIdle3.png")
         mario_Lwalk = loadImage(str("LMarioWalk") + str(frame2)+str(".png"))
         mario_Rwalk = loadImage(str("RMarioWalk") + str(frame2)+str(".png"))
-        if keyPressed == False:
+        if keyPressed == False or Key != 'a' and Key != 'd' and Key != 'w':
             if direction == "left" or direction == "left" and Key == "w" :
                 image(marioL,x,y,width/17.5,height/17.5)
             if direction == "right" or direction == "Right" and Key == "w":
                 image(marioR,x,y,width/17.5,height/17.5)
                 #Key = 'v'
-        if Key == "j":
-            jump == "ON"
-        if jump == "ON":
-            if Key == 'w':
-                Key = "v"
-                jump = "OFF"
-            
-            
-        if keyPressed == True:
-            if Key == 'w' or Key == 'a' or Key == 's' or Key == 'd':
-                if Key == 'a':
-                    x -= 5
-                    image(mario_Lwalk,x,y,width/17.5,height/17.5)
-                    direction = "left"
-                if Key == 'd':
-                    x += 5
-                    image(mario_Rwalk,x,y,width/17.5,height/17.5)
-                    direction = "right"
-                    
-        if jump == "OFF":
-
+        if ladder == False:
+            if Key == "j":
+                jump == "ON"
+            if jump == "ON":
+                if Key == 'w':
+                    Key = "v"
+                    jump = "OFF"
+                
+                
             if keyPressed == True:
-                if direction == "left":
-                    Key = 'a'
-                if direction == "right":
-                    Key = 'd'
-                if direction == "left" or direction == "left" and Key == "w" :
-                    image(mario_Lwalk,x,y,width/17.5,height/17.5)
-                if direction == "right" or direction == "Right" and Key == "w":
-                    image(mario_Rwalk,x,y,width/17.5,height/17.5)
-            if Height < 4:
-                for i in range (1,200):
-                    b += 0.001
-                    if b >= 1:
-                        y -= 16
-                        Height += 1
-                    
-                        b = 0
-            if Height < 8 and Height >= 4:
-                for i in range (1,200):
-                    b += 0.001
-                    if b >= 1:
-                        y += 8
-                        Height += 0.5
-                        b = 0
-                        jump == "ON"
-            if Height == 8:
-                Height =0
-                jump = "ON"
+                if Key == 'w' or Key == 'a' or Key == 's' or Key == 'd':
+                    if Key == 'a':
+                        x -= 5
+                        image(mario_Lwalk,x,y,width/17.5,height/17.5)
+                        direction = "left"
+                    if Key == 'd':
+                        x += 5
+                        image(mario_Rwalk,x,y,width/17.5,height/17.5)
+                        direction = "right"
+                        
+            if jump == "OFF":
+    
+                if keyPressed == True:
+                    if direction == "left":
+                        Key = 'a'
+                    if direction == "right":
+                        Key = 'd'
+                    if direction == "left" or direction == "left" and Key == "w" :
+                        image(mario_Lwalk,x,y,width/17.5,height/17.5)
+                    if direction == "right" or direction == "Right" and Key == "w":
+                        image(mario_Rwalk,x,y,width/17.5,height/17.5)
+                if Height < 4:
+                    for i in range (1,200):
+                        b += 0.001
+                        if b >= 0.5:
+                            y -= 16
+                            Height += 1
+                        
+                            b = 0
+                if Height < 8 and Height >= 4:
+                    for i in range (1,200):
+                        b += 0.001
+                        if b >= 0.5:
+                            y += 8
+                            Height += 0.5
+                            b = 0
+                            jump == "ON"
+                if Height == 8:
+                    Height =0
+                    jump = "ON"
         
         barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png"))
         barrleroll1 = loadImage(str("Barrelroll") + str(frame)+str(".png"))
         for i in range(1,len(blocksX)):
             image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
-            if x <= blocksX[i] + 32 and x >= blocksX[i] - 42 or x <= X_barrel + 32 and x >= X_barrel -42:
-                if y >= blocksY[i] - 45 and y <= blocksY[i] + 30 or y >= Y_barrel - 45 and y <= Y_barrel+30:
+            if x <= blocksX[i] + 32 and x >= blocksX[i] - 42: #or x <= X_barrel + 32 and x >= X_barrel -42:
+                if y >= blocksY[i] - 45 and y <= blocksY[i] + 30: #or y >= Y_barrel - 45 and y <= Y_barrel+30:
+                    blocksY[i],blocksX[i] = -1000,-1000
                     lives -= 1
             
         if timer == False:
@@ -180,7 +183,56 @@ def draw():
                     frame += 1
                     if frame == 5:
                         frame = 1
-                
+        print(mouseX,mouseY)
+        if  x >= 604 and x <= 666:
+            if Key == "e":
+                if y >= 540:
+                    ladder = True
+                    y -= 2
+            if Key == "q":
+                if y < 690 and y >= 538:
+                    ladder = True
+                    y += 2
+        if x >= 66 and x <= 140:
+            print("OK")
+            if Key == "e":
+                if y >= 390 and y <= 538:
+                    ladder = True
+                    y -= 2
+            if Key == "q":
+                if y >= 388 and y <= 536:
+                    ladder = True
+                    y += 2
+        if x >= 280 and x <= 353:
+            if Key == "e":
+                if y <= 388 and y >= 85:
+                    ladder = True
+                    y -= 2
+            if Key == 'q':
+                if y >= 84 and y <= 386:
+                    ladder = True
+                    y += 2
+        if y == 540 or y == 538 or y == 539 or y == 690 or y == 388 or y == 84:
+            ladder = False
+        print(y)
+        if x <= 92 and y <= 582 and y >=365:
+            x += 5
+        if y == 690 and x <= 0:
+             x += 5
+        if y == 690 and x >= 750 or y == 388 and x >=750:
+            x -= 5
+        if y == 538 and x >= 616:
+            x -= 5
+        if y == 84 and x <= 0:
+            x += 5
+        if y == 84 and x >= 479:
+            x -= 5
+        
+        if ladder == True:
+                if direction == "left" or direction == "left" and Key == "w" :
+                    image(marioL,x,y,width/17.5,height/17.5)
+                if direction == "right" or direction == "Right" and Key == "w":
+                    image(marioR,x,y,width/17.5,height/17.5)
         for i in range(0,len(blocksX)):
             if blocksX[i] <= 481 and blocksY[i] == 95:
                 blocksX[i] += 3.5
@@ -197,6 +249,17 @@ def draw():
          
             if blocksX[i] == 307.5 and blocksY[i] >= 250 and blocksY[i] <= 399:
                 blocksY[i] += 3.5
+            if blocksY[i] == 400.5 and blocksX[i] <= 307.5 and blocksX[i] >= 100:
+                blocksX[i] -=3.5
+                print("ok")
+            if blocksX[i] == 97.5 and blocksY[i] >= 399.5 and blocksY[i] <= 550:
+                blocksY[i] += 3.5
+            if blocksY[i] == 551 and blocksX[i] >= 97.5 and blocksX[i] <=670:
+                blocksX[i] += 3.5
+            if blocksX[i] == 671.5 and blocksY[i] >= 551 and blocksY[i] <= 700:
+                blocksY[i] += 3.5
+            if blocksY[i] == 701.5:
+                blocksX[i] -= 3.5
         if On1[Kong_animation1] == "throw":           
                 image(barrleroll,X_barrel,Y_barrel,width/25,height/25)
                 wait = True
@@ -207,12 +270,9 @@ def draw():
                 Y_barrel += 3 
                 if Y_barrel >= 800:
                     wait = False
-                    print("ok")
                     Kong_animation1 = 0
-                    print("ok")
                     X_barrel,Y_barrel = 285,95
-        print(On1[Kong_animation1],Kong_animation1,wait,X_barrel,Y_barrel)
-                            
+       # print(On1[Kong_animation1],Kong_animation1,wait,X_barrel,Y_barrel)                
 
             
             # if blocksX[i] >= 222 and blocksX[i] <= 260 and blocksY[i] <= 125:
