@@ -3,7 +3,7 @@ def setup():
     size(800,800)
     background(0, 0, 0) #Black Background
     global status
-    status = 0 #0 = Main Menu, 1 = In-Game, 2 = Help, 3 = Lose, 4 = Win
+    status = 0 #0 = Main Menu, 1 = In-Game, 2 = Help, 3 = Lose, 4 = Win, 5 = Preview
     #########################################################################
     global PBm_Height #Amount Main Menu Play Button Height is to be divided by during mouse hover
     global HBm_Height #Amount Main Menu Help Button Height is to be divided by during mouse hover
@@ -29,6 +29,10 @@ def setup():
     PlayButtonMain = loadImage("DK Play Button.png") #Main Menu Play Button 
     global HelpButtonMain
     HelpButtonMain = loadImage("DK Help Button.png") #Main Menu Help Button
+    global PreviewButtonHelp
+    PreviewButtonHelp = loadImage("DK Preview Button.png")
+    global HomeButtonPreview
+    HomeButtonPreview = loadImage("DK Home Button.png")
    
 
 boxx,boxy = 100,100
@@ -63,7 +67,7 @@ def draw():
     global mario_Lwalk,direction,mario_Rwalk,jump,Kong_animation
     global Background,Kong
     global status #Control Variables
-    global GameIconMain, PlayButtonMain, HelpButtonMain #Image Assets
+    global GameIconMain, PlayButtonMain, HelpButtonMain, PreviewButtonHelp, HomeButtonPreview #Image Assets
     global PBm_Height, HBm_Height, PBm_Width, HBm_Width #Scaling Variables
     global PBm_X, HBm_X, PBm_Y, HBm_Y #Coordinate Variables
     if (status == 0): #Main Menu
@@ -299,16 +303,22 @@ def draw():
     elif (status == 2):
         instructions = loadImage("DK Tutorial.png")
         image(instructions, 0, 0, width / 1, height / 1)
+        image(PreviewButtonHelp, 20, 700, width / 6, height / 10.5)
+        
+    elif (status == 5):
+        image(Background, 0, 0)
+        image(HomeButtonPreview, 0, 0)
+        
             
             
 def mousePressed(): #Button Click Detection
     global status
     println((mouseX, mouseY)) #For Mouse Click Position Testing Purposes
     if (status == 0):
-        if ((mouseX >= 130 and mouseX <= 261) and (mouseY >= 203 and mouseY <= 265)): #Play Button is clicked
+        if ((mouseX >= 262 and mouseX <= 523) and (mouseY >= 455 and mouseY <= 578)): #Play Button is clicked
             println("Play Button Was Clicked")
             status = 1
-        elif ((mouseX >= 130 and mouseX <= 261) and (mouseY >= 275 and mouseY <= 340)): #Help Button is clicked
+        elif ((mouseX >= 262 and mouseX <= 523) and (mouseY >= 604 and mouseY <= 727)): #Help Button is clicked
             println("Help Button Was Clicked")
             status = 2
         else: 
@@ -319,12 +329,12 @@ def mouseMoved():
     global PBm_Height, HBm_Height, PBm_Width, HBm_Width #Scaling Variables
     global PBm_X, HBm_X, PBm_Y, HBm_Y #Coordinate Variables
     if (status == 0):
-        if ((mouseX >= 130 and mouseX <= 261) and (mouseY >= 203 and mouseY <= 265)):
+        if ((mouseX >= 262 and mouseX <= 523) and (mouseY >= 455 and mouseY <= 578)):
             PBm_Height = 5.5 #Increases The Play Button Size when Mouse hovers over it
             PBm_Width = 2.75
             PBm_X = 250 #Adjusts X Position to keep Play Button centred
             PBm_Y = 450
-        elif ((mouseX >= 130 and mouseX <= 261) and (mouseY >= 275 and mouseY <= 340)):
+        elif ((mouseX >= 262 and mouseX <= 523) and (mouseY >= 604 and mouseY <= 727)):
             HBm_Height = 5.5 #Increases The Help Button Size when Mouse hovers over it
             HBm_Width = 2.75
             HBm_X = 250 #Adjusts X Position to keep Help Button centred
