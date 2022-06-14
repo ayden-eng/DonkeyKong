@@ -53,8 +53,8 @@ Background = 0
 Kong = 1
 Kong_animation= 0
 Kong_animation1 = 0
-On = ["on","off","off","throw","off","off"]
-On1 = ["off","off","off","throw","throw","off"]
+On = ["on","off","off","off","off","on"]
+On1 = ["throw","off","throw","throw","off","off"]
 lives = 3
 wait = False
 ladder = False
@@ -143,7 +143,14 @@ def draw():
                 if Height == 8:
                     Height =0
                     jump = "ON"
-        
+        print(frame3)
+        lives2 = loadImage("DKlives.png")
+        if lives >=1:
+            image(lives2,0,0,width/18,height/18)
+        if lives >=2:
+            image(lives2,55,0,width/18,height/18)
+        if lives >= 3:
+            image(lives2,110,0,width/18,height/18)
         barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png"))
         barrleroll1 = loadImage(str("Barrelroll") + str(frame)+str(".png"))
         for i in range(1,len(blocksX)):
@@ -152,19 +159,21 @@ def draw():
                 if y >= blocksY[i] - 45 and y <= blocksY[i] + 30: #or y >= Y_barrel - 45 and y <= Y_barrel+30:
                     blocksY[i],blocksX[i] = -1000,-1000
                     lives -= 1
-            
+            if x <= X_barrel +32 and x >= X_barrel - 42:
+                if y >= Y_barrel - 45 and y <= Y_barrel + 30:
+                    X_barrel,Y_barrel = -1000,-1000
+                    lives -= 1
         if timer == False:
             for i in range(1,200):
                 n += 0.001
                 if n >= 20:
+                    Kong_animation = random.randint(0,5)
                     if wait == False:
                         Kong_animation1 = random.randint(0,5)
                         X_barrel,Y_barrel = 285,95
-                    Kong_animation = random.randint(0,5)
                     n = 0
                   
                    
-                        
                         
     #__________________________________________________________________________
         if timer == False:
@@ -216,9 +225,26 @@ def draw():
                 if y >= 84 and y <= 386:
                     ladder = True
                     y += 2
-        if y == 540 or y == 538 or y == 539 or y == 690 or y == 388 or y == 84:
+        if x >= 579 and x <=625:
+            if Key == "e":
+                if y <= 388 and y >= 238:
+                    ladder = True
+                    y -= 2
+            if Key == "q":
+                if y >= 236 and y <= 386:
+                    ladder = True
+                    y += 2
+        if x>= 687 and x <= 739:
+            if Key == 'e':
+                if y <= 238 and y >=85:
+                    ladder = True
+                    y -= 2 
+            if Key == 'q':
+                if y >= 83 and y <= 234:
+                    ladder = True
+                    y += 2
+        if y == 540 or y == 538 or y == 539 or y == 690 or y == 388 or y == 84 or y == 236:
             ladder = False
-        print(y)
         if x <= 92 and y <= 582 and y >=365:
             x += 5
         if y == 690 and x <= 0:
@@ -229,7 +255,7 @@ def draw():
             x -= 5
         if y == 84 and x <= 0:
             x += 5
-        if y == 84 and x >= 479:
+        if y == 84 and x >= 709:
             x -= 5
         
         if ladder == True:
@@ -255,7 +281,7 @@ def draw():
                 blocksY[i] += 3.5
             if blocksY[i] == 400.5 and blocksX[i] <= 307.5 and blocksX[i] >= 100:
                 blocksX[i] -=3.5
-                print("ok")
+  
             if blocksX[i] == 97.5 and blocksY[i] >= 399.5 and blocksY[i] <= 550:
                 blocksY[i] += 3.5
             if blocksY[i] == 551 and blocksX[i] >= 97.5 and blocksX[i] <=670:
@@ -276,7 +302,7 @@ def draw():
                     wait = False
                     Kong_animation1 = 0
                     X_barrel,Y_barrel = 285,95
-       # print(On1[Kong_animation1],Kong_animation1,wait,X_barrel,Y_barrel)                
+           
 
             
             # if blocksX[i] >= 222 and blocksX[i] <= 260 and blocksY[i] <= 125:
@@ -313,7 +339,6 @@ def draw():
             
 def mousePressed(): #Button Click Detection
     global status
-    println((mouseX, mouseY)) #For Mouse Click Position Testing Purposes
     if (status == 0):
         if ((mouseX >= 262 and mouseX <= 523) and (mouseY >= 455 and mouseY <= 578)): #Play Button is clicked
             println("Play Button Was Clicked")
