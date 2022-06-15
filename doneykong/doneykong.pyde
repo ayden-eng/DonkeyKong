@@ -1,8 +1,14 @@
 import random
+add_library('minim')
 def setup():
     size(800,800)
     background(0, 0, 0) #Black Background
-    global status
+    global status, minim,gamesong,hitsong,deathsong
+    minim=Minim(this) 
+    gamesong = minim.loadFile("8d82b5_Sonic_Green_Hill_Zone_Theme_Song.mp3")
+    hitsong = minim.loadFile("puff.mp3")
+    deathsong = minim.loadFile("Mario Death - QuickSounds.com.mp3")
+    gamesong.loop() 
     status = 0 #0 = Main Menu, 1 = In-Game, 2 = Help, 3 = Lose, 4 = Win, 5 = Preview
     #########################################################################
     global PBm_Height #Amount Main Menu Play Button Height is to be divided by during mouse hover
@@ -53,7 +59,7 @@ Background = 0
 Kong = 1
 Kong_animation= 0
 Kong_animation1 = 0
-On = ["on","off","off","off","off","on"]
+On = ["on","off","off","on","off","on"]
 On1 = ["throw","off","throw","throw","off","off"]
 lives = 3
 wait = False
@@ -66,6 +72,7 @@ def draw():
     global ladder,Kong_animation1,On1,wait,X_barrel,Y_barrel,lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
     global mario_Lwalk,direction,mario_Rwalk,jump,Kong_animation
     global Background,Kong
+    global hitsong,deathsong
     global status #Control Variables
     global GameIconMain, PlayButtonMain, HelpButtonMain, PreviewButtonHelp, HomeButtonPreview #Image Assets
     global PBm_Height, HBm_Height, PBm_Width, HBm_Width #Scaling Variables
@@ -159,10 +166,14 @@ def draw():
                 if y >= blocksY[i] - 45 and y <= blocksY[i] + 30: #or y >= Y_barrel - 45 and y <= Y_barrel+30:
                     blocksY[i],blocksX[i] = -1000,-1000
                     lives -= 1
+                    hitsong.play()
+                    hitsong.rewind()
             if x <= X_barrel +32 and x >= X_barrel - 42:
                 if y >= Y_barrel - 45 and y <= Y_barrel + 30:
                     X_barrel,Y_barrel = -1000,-1000
                     lives -= 1
+                    hitsong.play()
+                    hitsong.rewind()
         if timer == False:
             for i in range(1,200):
                 n += 0.001
@@ -179,7 +190,7 @@ def draw():
         if timer == False:
             for i in range(1,200):
                 m += 0.001
-                if m >= 3:
+                if m >= .4:
                     frame2 += 1
                     if frame2 == 3:
                         frame2 = 1
@@ -191,7 +202,7 @@ def draw():
                             blocksX.append(285)
                             blocksY.append(95)
                 
-                if m >=3:
+                if m >=.4:
                     m = 0
                     frame += 1
                     if frame == 5:
@@ -323,8 +334,7 @@ def draw():
             # if blocksY[i] == 309:
             #     blocksX[i] -= 1
         if lives == 0:
-            while 1==1:
-                print("DEAD")
+            status = 4
                 
     elif (status == 2):
         instructions = loadImage("DK Tutorial.png")
@@ -334,8 +344,11 @@ def draw():
     elif (status == 5):
         image(Background, 0, 0)
         image(HomeButtonPreview, 0, 0)
-        
-            
+    print(status)
+    if  status == 4:
+        background(0,0,0)
+        gamesong.pause()
+        deathsong.play()
             
 def mousePressed(): #Button Click Detection
     global status
@@ -348,7 +361,7 @@ def mousePressed(): #Button Click Detection
             status = 2
         else: 
             println("No Button Click detected") #No Button Click Detected
-            
+    
 def mouseMoved():
     global status
     global PBm_Height, HBm_Height, PBm_Width, HBm_Width #Scaling Variables
