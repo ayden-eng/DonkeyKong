@@ -8,7 +8,6 @@ def setup():
     gamesong = minim.loadFile("8d82b5_Sonic_Green_Hill_Zone_Theme_Song.mp3")
     hitsong = minim.loadFile("puff.mp3")
     deathsong = minim.loadFile("Mario Death - QuickSounds.com.mp3")
-    gamesong.loop() 
     status = 0 #0 = Main Menu, 1 = In-Game, 2 = Help, 3 = Lose, 4 = Win, 5 = Preview
     #########################################################################
     global PBm_Height #Amount Main Menu Play Button Height is to be divided by during mouse hover
@@ -87,7 +86,8 @@ def draw():
         Background = loadImage("DonkeyKongMap1.png")
         background(0, 0, 0)
         image(Background, 0, 0, width * 1, height * 1)
-
+        lady = loadImage("Lady 2.png")
+        image(lady,630,80,width /10, height /15)
         Kong = loadImage(str("DonkeyKong") + str(frame3)+str(".png"))
         image(Kong,200,48, width * 0.1, height * 0.1)
         marioL = loadImage("MarioIdle1.png")
@@ -150,7 +150,7 @@ def draw():
                 if Height == 8:
                     Height =0
                     jump = "ON"
-        print(frame3)
+        print(x,y)
         lives2 = loadImage("DKlives.png")
         if lives >=1:
             image(lives2,0,0,width/18,height/18)
@@ -254,19 +254,26 @@ def draw():
                 if y >= 83 and y <= 234:
                     ladder = True
                     y += 2
+        if y <= 84 and x <= 440 and x >= 410:
+            x -= 5
+        if y == 84 and x <= 664 and x >= 640:
+            status = 5
+        if x >= 265 and y <= 161 and y >= 388:
+            x += 5
+        print(status)
         if y == 540 or y == 538 or y == 539 or y == 690 or y == 388 or y == 84 or y == 236:
             ladder = False
-        if x <= 92 and y <= 582 and y >=365:
+        if x <= 92 and y <= 582 and y >=265:
             x += 5
         if y == 690 and x <= 0:
              x += 5
         if y == 690 and x >= 750 or y == 388 and x >=750:
             x -= 5
-        if y == 538 and x >= 616:
+        if y <= 538 and y >= 482 and x >= 616:
             x -= 5
         if y == 84 and x <= 0:
             x += 5
-        if y == 84 and x >= 709:
+        if y <= 800 and x >= 760:
             x -= 5
         
         if ladder == True:
