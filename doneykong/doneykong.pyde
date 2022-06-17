@@ -3,11 +3,12 @@ add_library('minim')
 def setup():
     size(800,800)
     background(0, 0, 0) #Black Background
-    global status, minim,gamesong,hitsong,deathsong
+    global status, minim,gamesong,hitsong,deathsong #game songs
     minim=Minim(this) 
-    gamesong = minim.loadFile("8d82b5_Sonic_Green_Hill_Zone_Theme_Song.mp3")
-    hitsong = minim.loadFile("puff.mp3")
-    deathsong = minim.loadFile("Mario Death - QuickSounds.com.mp3")
+    gamesong = minim.loadFile("8d82b5_Sonic_Green_Hill_Zone_Theme_Song.mp3")# this is the game song 
+    hitsong = minim.loadFile("puff.mp3") # this plays when you get hit
+    deathsong = minim.loadFile("Mario Death - QuickSounds.com.mp3")# this plays when you die
+    gamesong.loop() # this plays the theme song forever
     status = 0 #0 = Main Menu, 1 = In-Game, 2 = Help, 3 = Lose, 4 = Win, 5 = Preview
     #########################################################################
     global PBm_Height #Amount Main Menu Play Button Height is to be divided by during mouse hover
@@ -40,38 +41,38 @@ def setup():
     HomeButtonPreview = loadImage("DK Home Button.png")
    
 
-boxx,boxy = 100,100
-x,y = 0,690
-X_barrel,Y_barrel = 285,95
-timer,n,b = False,0,0
-blocksX = [0]
-blocksY = [0]
-n =0
-Key = 0
-frame,frame2,frame3 = 1,1,1
-barrleroll,m = 1,0
-mario = 0
-mario_Lwalk,mario_Rwalk = 1,1
-direction,jump = "left","ON"
-Height = 0
-Background = 0
-Kong = 1
-Kong_animation= 0
-Kong_animation1 = 0
-On = ["on","off","off","on","off","on"]
-On1 = ["throw","off","throw","throw","off","off"]
-lives = 3
-wait = False
-ladder = False
-def keyPressed ():
+boxx,boxy = 100,100 # throwing barrel x and y
+x,y = 0,690 # players x and y 
+X_barrel,Y_barrel = 285,95 # normal x and y 
+timer,n,b = False,0,0 # timer for aninmations 
+blocksX = [0] # x list for all barrels 
+blocksY = [0] # y list for all barrels
+n =0 # used as a delay for timers 
+Key = 0 # checks for the pervouis key pressed 
+frame,frame2,frame3 = 1,1,1 # frames for each animation
+barrleroll,m = 1,0 # if the barrle is rolling 
+mario = 0 # mario animation 
+mario_Lwalk,mario_Rwalk = 1,1 # marios dircetions 
+direction,jump = "left","ON" # jump direction 
+Height = 0 # stop the jump 
+Background = 0 # background 
+Kong = 1 # kong aniamtion 
+Kong_animation= 0 # frame 
+Kong_animation1 = 0 # frame
+On = ["on","off","off","on","off","on"] # percentage of throwing 
+On1 = ["throw","off","throw","throw","off","off"] # percentage of thorwing 
+lives = 3 # number of lives 
+wait = False # stop the movement 
+ladder = False # if mario is on a ladder 
+def keyPressed (): # checks for if key was pressed 
     global Key
     Key = key
 
 def draw():
-    global ladder,Kong_animation1,On1,wait,X_barrel,Y_barrel,lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height
+    global ladder,Kong_animation1,On1,wait,X_barrel,Y_barrel,lives,frame3,boxx,boxy,x,y,timer,n,blocksX,blocksY,n,frame,barrleroll,m,mario,frame2,Key,b,Height 
     global mario_Lwalk,direction,mario_Rwalk,jump,Kong_animation
-    global Background,Kong
-    global hitsong,deathsong
+    global Background,Kong # assests
+    global hitsong,deathsong # sounds 
     global status #Control Variables
     global GameIconMain, PlayButtonMain, HelpButtonMain, PreviewButtonHelp, HomeButtonPreview #Image Assets
     global PBm_Height, HBm_Height, PBm_Width, HBm_Width #Scaling Variables
@@ -83,24 +84,24 @@ def draw():
         image(HelpButtonMain, HBm_X, HBm_Y, width / HBm_Width, height / HBm_Height) #Load Help Button In Main Menu
     elif (status == 1): #In Game
         rect(x,y,10,10)
-        Background = loadImage("DonkeyKongMap1.png")
-        background(0, 0, 0)
-        image(Background, 0, 0, width * 1, height * 1)
-        lady = loadImage("Lady 2.png")
-        image(lady,630,80,width /10, height /15)
+        Background = loadImage("DonkeyKongMap1.png") # loads the map
+        background(0, 0, 0) # black background
+        image(Background, 0, 0, width * 1, height * 1) 
+        lady = loadImage("Lady 2.png") # addes the lady
+        image(lady,630,80,width /10, height /15) 
         Kong = loadImage(str("DonkeyKong") + str(frame3)+str(".png"))
         image(Kong,200,48, width * 0.1, height * 0.1)
         marioL = loadImage("MarioIdle1.png")
         marioR = loadImage("MarioIdle3.png")
         mario_Lwalk = loadImage(str("LMarioWalk") + str(frame2)+str(".png"))
         mario_Rwalk = loadImage(str("RMarioWalk") + str(frame2)+str(".png"))
-        if keyPressed == False or Key != 'a' and Key != 'd' and Key != 'w':
+        if keyPressed == False or Key != 'a' and Key != 'd' and Key != 'w': # this prints mario stading still it check the direction of mario and print mario accodingly 
             if direction == "left" or direction == "left" and Key == "w" :
                 image(marioL,x,y,width/17.5,height/17.5)
             if direction == "right" or direction == "Right" and Key == "w":
                 image(marioR,x,y,width/17.5,height/17.5)
                 #Key = 'v'
-        if ladder == False:
+        if ladder == False: # stop jumping while on ladder 
             if Key == "j":
                 jump == "ON"
             if jump == "ON":
@@ -109,7 +110,7 @@ def draw():
                     jump = "OFF"
                 
                 
-            if keyPressed == True:
+            if keyPressed == True: # this makes mario move and jump
                 if Key == 'w' or Key == 'a' or Key == 's' or Key == 'd':
                     if Key == 'a':
                         x -= 5
@@ -120,7 +121,7 @@ def draw():
                         image(mario_Rwalk,x,y,width/17.5,height/17.5)
                         direction = "right"
                         
-            if jump == "OFF":
+            if jump == "OFF": # this is for when mario jumps 
     
                 if keyPressed == True:
                     if direction == "left":
@@ -131,7 +132,7 @@ def draw():
                         image(mario_Lwalk,x,y,width/17.5,height/17.5)
                     if direction == "right" or direction == "Right" and Key == "w":
                         image(mario_Rwalk,x,y,width/17.5,height/17.5)
-                if Height < 4:
+                if Height < 4: # y increases 
                     for i in range (1,200):
                         b += 0.001
                         if b >= 0.5:
@@ -139,7 +140,7 @@ def draw():
                             Height += 1
                         
                             b = 0
-                if Height < 8 and Height >= 4:
+                if Height < 8 and Height >= 4: # y decreaes 
                     for i in range (1,200):
                         b += 0.001
                         if b >= 0.5:
@@ -151,30 +152,30 @@ def draw():
                     Height =0
                     jump = "ON"
         print(x,y)
-        lives2 = loadImage("DKlives.png")
+        lives2 = loadImage("DKlives.png") # print the hearts
         if lives >=1:
             image(lives2,0,0,width/18,height/18)
         if lives >=2:
             image(lives2,55,0,width/18,height/18)
         if lives >= 3:
             image(lives2,110,0,width/18,height/18)
-        barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png"))
-        barrleroll1 = loadImage(str("Barrelroll") + str(frame)+str(".png"))
+        barrleroll = loadImage(str("Barrelroll") + str(frame)+str(".png")) # this makes the image of the barrle change deping on the frame
+        barrleroll1 = loadImage(str("Barrelroll") + str(frame)+str(".png"))# this makes the image of the barrle change deping on the frame
         for i in range(1,len(blocksX)):
-            image(barrleroll,blocksX[i],blocksY[i],width/25,height/25)
-            if x <= blocksX[i] + 32 and x >= blocksX[i] - 42: #or x <= X_barrel + 32 and x >= X_barrel -42:
-                if y >= blocksY[i] - 45 and y <= blocksY[i] + 30: #or y >= Y_barrel - 45 and y <= Y_barrel+30:
+            image(barrleroll,blocksX[i],blocksY[i],width/25,height/25) # this for the collsions 
+            if x <= blocksX[i] + 32 and x >= blocksX[i] - 42: 
+                if y >= blocksY[i] - 45 and y <= blocksY[i] + 30: 
                     blocksY[i],blocksX[i] = -1000,-1000
                     lives -= 1
                     hitsong.play()
                     hitsong.rewind()
-            if x <= X_barrel +32 and x >= X_barrel - 42:
+            if x <= X_barrel +32 and x >= X_barrel - 42: # this for the collsions 
                 if y >= Y_barrel - 45 and y <= Y_barrel + 30:
                     X_barrel,Y_barrel = -1000,-1000
                     lives -= 1
                     hitsong.play()
                     hitsong.rewind()
-        if timer == False:
+        if timer == False: # this gets kong to throw barrles 
             for i in range(1,200):
                 n += 0.001
                 if n >= 20:
@@ -187,7 +188,7 @@ def draw():
                    
                         
     #__________________________________________________________________________
-        if timer == False:
+        if timer == False: # this changes the frames of the game
             for i in range(1,200):
                 m += 0.001
                 if m >= .4:
@@ -207,8 +208,7 @@ def draw():
                     frame += 1
                     if frame == 5:
                         frame = 1
-        print(mouseX,mouseY)
-        if  x >= 604 and x <= 666:
+        if  x >= 604 and x <= 666: # this is all for checking if the player is on a ladder 
             if Key == "e":
                 if y >= 540:
                     ladder = True
@@ -254,7 +254,7 @@ def draw():
                 if y >= 83 and y <= 234:
                     ladder = True
                     y += 2
-        if y <= 84 and x <= 440 and x >= 410:
+        if y <= 84 and x <= 440 and x >= 410: # this makes the player move again when on the proper y axis 
             x -= 5
         if y == 84 and x <= 664 and x >= 640:
             status = 4
@@ -276,11 +276,12 @@ def draw():
         if y <= 800 and x >= 760:
             x -= 5
         
-        if ladder == True:
+        if ladder == True: # THIS PRINTS MARIO ON THE LADDER 
                 if direction == "left" or direction == "left" and Key == "w" :
                     image(marioL,x,y,width/17.5,height/17.5)
                 if direction == "right" or direction == "Right" and Key == "w":
                     image(marioR,x,y,width/17.5,height/17.5)
+        # THIS MOVES THE BARRLES IN THE RIGHT WHY 
         for i in range(0,len(blocksX)):
             if blocksX[i] <= 481 and blocksY[i] == 95:
                 blocksX[i] += 3.5
@@ -308,6 +309,7 @@ def draw():
                 blocksY[i] += 3.5
             if blocksY[i] == 701.5:
                 blocksX[i] -= 3.5
+            # THIS MAKES KONG THOW BARRLES STARIGHT DOWN
         if On1[Kong_animation1] == "throw":           
                 image(barrleroll,X_barrel,Y_barrel,width/25,height/25)
                 wait = True
@@ -321,49 +323,30 @@ def draw():
                     Kong_animation1 = 0
                     X_barrel,Y_barrel = 285,95
            
-
-            
-            # if blocksX[i] >= 222 and blocksX[i] <= 260 and blocksY[i] <= 125:
-            #     blocksX[i] += 0.4
-            #     blocksY[i] += 1
-            # if blocksY[i] == 126 and blocksX[i] >= 154:
-            #     blocksX[i] -= 1
-            # if blocksX[i] <= 154 and blocksY[i] <=186 and blocksY[i] >= 125 :
-            #     blocksY[i] += 1
-            # if blocksY[i] == 187 and blocksX[i] >= 68:
-            #     blocksX[i] -= 1
-            # if blocksX[i] <= 68 and blocksY[i] <= 247 and blocksY[i] >= 186:
-            #     blocksY[i] +=1
-            # if blocksY[i] == 248 and blocksX[i] <= 297 :
-            #     blocksX[i] += 1
-            # if blocksX[i] >= 297 and blocksY >=248 and blocksY[i] <= 308: 
-            #     blocksY[i] += 1
-            # if blocksY[i] == 309:
-            #     blocksX[i] -= 1
         if lives == 0:
             status = 3
                 
-    elif (status == 2):
+    elif (status == 2): # GI SCREEN
         instructions = loadImage("DK Tutorial.png")
         image(instructions, 0, 0, width / 1, height / 1)
         image(PreviewButtonHelp, 20, 700, width / 6, height / 10.5)
         
-    elif (status == 3):
+    elif (status == 3): # GI SCREEN
         Gameover = loadImage("DeathScreen DK.png")
         image(Gameover, 0, 0)
         
-    elif (status == 4):
+    elif (status == 4): # GI SCREEN
         won = loadImage("VictoryScreen DK.png")
         image(won, 0, 0)
         
-    elif (status == 5):
+    elif (status == 5): # GI SCREEN
         background(0, 0, 0)
         futhshckisit = loadImage("DonkeyKongMap1.png")
         image(futhshckisit, 0, 0, width / 1, height / 1)
         buttonn = loadImage("DK Home Button.png")
         image(buttonn, 15, 15, width / 7.5, height / 10)
 
-    if  status == 3:
+    if  status == 3: # GI SCREEN
         gamesong.pause()
         deathsong.play()
             
