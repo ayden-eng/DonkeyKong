@@ -257,7 +257,7 @@ def draw():
         if y <= 84 and x <= 440 and x >= 410:
             x -= 5
         if y == 84 and x <= 664 and x >= 640:
-            status = 5
+            status = 4
         if x >= 265 and y <= 161 and y >= 388:
             x += 5
         print(status)
@@ -341,24 +341,35 @@ def draw():
             # if blocksY[i] == 309:
             #     blocksX[i] -= 1
         if lives == 0:
-            status = 4
+            status = 3
                 
     elif (status == 2):
         instructions = loadImage("DK Tutorial.png")
         image(instructions, 0, 0, width / 1, height / 1)
         image(PreviewButtonHelp, 20, 700, width / 6, height / 10.5)
         
+    elif (status == 3):
+        Gameover = loadImage("DeathScreen DK.png")
+        image(Gameover, 0, 0)
+        
+    elif (status == 4):
+        won = loadImage("VictoryScreen DK.png")
+        image(won, 0, 0)
+        
     elif (status == 5):
-        image(Background, 0, 0)
-        image(HomeButtonPreview, 0, 0)
-    print(status)
-    if  status == 4:
-        background(0,0,0)
+        background(0, 0, 0)
+        futhshckisit = loadImage("DonkeyKongMap1.png")
+        image(futhshckisit, 0, 0, width / 1, height / 1)
+        buttonn = loadImage("DK Home Button.png")
+        image(buttonn, 15, 15, width / 7.5, height / 10)
+
+    if  status == 3:
         gamesong.pause()
         deathsong.play()
             
 def mousePressed(): #Button Click Detection
     global status
+    println(str(mouseX) + ', ' + str(mouseY))
     if (status == 0):
         if ((mouseX >= 262 and mouseX <= 523) and (mouseY >= 455 and mouseY <= 578)): #Play Button is clicked
             println("Play Button Was Clicked")
@@ -368,6 +379,14 @@ def mousePressed(): #Button Click Detection
             status = 2
         else: 
             println("No Button Click detected") #No Button Click Detected
+    elif (status == 2):
+        if ((mouseX >= 21 and mouseX <= 152) and (mouseY >= 700 and mouseY <= 775)):
+            println("Preview Button Was Clicked")
+            status = 5
+    elif (status == 5):
+        if ((mouseX >= 15 and mouseX <= 118) and (mouseY >= 18 and mouseY <= 95)):
+            println("Return to home")
+            status = 0
     
 def mouseMoved():
     global status
